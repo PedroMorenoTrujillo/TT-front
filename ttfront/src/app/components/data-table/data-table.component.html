@@ -1,26 +1,25 @@
 <p-table
+    *ngIf="tableData"
     #dtable
-    [value]="[]"
+    [value]="tableData"
     [rows]="10"
     [showCurrentPageReport]="true"
-    [rowsPerPageOptions]="[10, 25, 50]"
     [paginator]="true"
-    [columns]="[]"
-    (onRowSelect)="onRowSelect($event)"
+    [columns]="columns"
     dataKey="id"
   >
 
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th [pSortableColumn]="col.field" *ngFor="let col of columns">
-          {{ col.header }}
+          {{ col.name }}
           <p-sortIcon [field]="col.field"></p-sortIcon>
         </th>
       </tr>
     </ng-template>
 
     <ng-template pTemplate="body" let-rowData let-columns="columns">
-      <tr>
+      <tr [routerLink]="['details/' + rowData._id]">
         <td *ngFor="let col of columns; let i = index">
             {{ rowData[col.field] }}</td>
       </tr>
