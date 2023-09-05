@@ -24,11 +24,10 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.exchangeValue =
       this.exchangeObservableService.exchangeObservableSource$;
-    this.exchangeService
-      .getExchange()
-      .pipe(filter((exchange) => exchange !== undefined))
-      .subscribe((exchange: ExchangeModel) =>
-        this.exchangeObservableService.exchangeObservableSourceNext(exchange)
-      );
+    this.exchangeService.getExchangeFromSockets()
+    .pipe(filter((exchange) => exchange !== undefined))
+    .subscribe((exchange: ExchangeModel) =>
+      this.exchangeObservableService.exchangeObservableSourceNext(exchange)
+    );
   }
 }
