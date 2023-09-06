@@ -1,4 +1,4 @@
 
 <div class="m-5">
-    <app-data-table [columns]="tableColumns" [tableData]="(tableData | async) || []"></app-data-table>
+    <app-data-table [columns]="tableColumns" [tableData]="(tableData | async) || []" [exchangeRate]="exchangeRate | async"></app-data-table>
 </div>

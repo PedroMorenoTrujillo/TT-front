@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { AccountModel } from '../models/account.interface';
+import { WebsocketService } from './websocket.service';
 
 
 @Injectable({
@@ -9,13 +9,17 @@ import { AccountModel } from '../models/account.interface';
 })
 export class AccountService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private websocketService: WebsocketService) { }
 
-  getAccounts():Observable<AccountModel[]>{
-    return this.http.get<AccountModel[]>('http://localhost:3000/account');
+  getAccountById(): Observable<AccountModel>{
+    return this.websocketService.listen('accountId') as Observable<AccountModel>
   }
 
-  getAccountById(id:string): Observable<AccountModel>{
-    return this.http.get<AccountModel>(`http://localhost:3000/account/${id}`)
+  emitAccountById(id:string): Observable<AccountModel>{
+    return this.websocketService.emitAccountId('accountId', id) as Observable<AccountModel>
+  }
+
+  getAccountsFromSockets(): Observable<AccountModel[]>{
+    return this.websocketService.listen('account') as Observable<AccountModel[]>
   }
 }

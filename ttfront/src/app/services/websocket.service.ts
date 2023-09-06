@@ -9,8 +9,10 @@ export class WebsocketService {
   constructor(private socket: Socket) { }
 
   listen(event: string){
-    console.log('listen', event)
     return this.socket.fromEvent(event)
   }
 
+  emitAccountId(event: string, id: string ) {
+    return this.socket.emit(event, id);
+  }
 }

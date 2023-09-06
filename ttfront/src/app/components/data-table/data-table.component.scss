@@ -1,0 +1,14 @@
+:host{
+    ::ng-deep{
+        p-table .p-element.p-datatable-tbody tr {
+            &.red{
+                background-color: rgba(red, 0.75);
+                color: white;
+            }
+            &.green{
+                background-color: rgba(green, 0.75);
+                color: white;
+            }
+        }
+    }
+}

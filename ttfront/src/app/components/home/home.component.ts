@@ -12,9 +12,11 @@ import {
   Observable,
   Subject,
   distinctUntilChanged,
+  map,
   takeUntil,
 } from 'rxjs';
-import { ExchangeObservableService } from 'src/app/services/exchange-observable.service';
+import { ExchangeService } from 'src/app/services/exchange.service';
+import { ExchangeModel } from 'src/app/models/exchange.interface';
 
 @Component({
   selector: 'app-home',
@@ -29,22 +31,23 @@ export class HomeComponent implements OnInit, OnDestroy {
   tableData: Observable<TableDataModel<AccountModel>[]> = new Observable<
     TableDataModel<AccountModel>[]
   >();
+  exchangeRate: Observable<ExchangeModel> = new Observable<ExchangeModel>() ;
   private readonly unsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
     private accountService: AccountService,
-    private readonly exchangeObservableService: ExchangeObservableService
+    private readonly exchangeService: ExchangeService
   ) {}
 
   ngOnInit(): void {
     this.getTableData();
-    this.exchangeObservableService.exchangeObservableSource$
+    this.exchangeRate = this.exchangeService
+      .getExchangeFromSockets()
       .pipe(takeUntil(this.unsubscribe), distinctUntilChanged())
-      .subscribe(() => this.getTableData());
   }
 
   getTableData(): void {
-    this.tableData = this.accountService.getAccounts() as Observable<
+    this.tableData = this.accountService.getAccountsFromSockets() as Observable<
       TableDataModel<AccountModel>[]
     >;
   }

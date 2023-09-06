@@ -21,8 +21,8 @@ export class DetailsComponent implements OnInit{
   
   ngOnInit(): void {
     const id = this.activatedRoute?.snapshot?.params['id'];
-    if(id) this.account = this.accountService.getAccountById(id)
-
+    if(id) this.accountService.emitAccountById(id)
+    this.account = this.accountService.getAccountById()
   }
 
 

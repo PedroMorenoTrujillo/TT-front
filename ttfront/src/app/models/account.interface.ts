@@ -1,10 +1,20 @@
-export interface AccountModel{
-    _id: string;
-    accountName: string;
-    category?: string;
-    tag?: string;
-    balance: number;
-    availableBalance: number;
-    orderCode: string;
-    orderId: string
+export interface AccountModel {
+  _id: string;
+  ccountName: string;
+  category?: string;
+  tag?: string;
+  balance: number;
+  availableBalance: number;
+  details?: IAccountDetail[];
+}
+
+export interface IAccountDetail {
+  _id: string;
+  orderId?: string;
+  orderCode?: string;
+  transactionType: string;
+  debit?: number;
+  credit?: number;
+  balance: number;
+  availableBalance: number;
 }
