@@ -2,13 +2,19 @@
     ::ng-deep{
         p-table .p-element.p-datatable-tbody tr {
             &.red{
-                background-color: rgba(red, 0.75);
-                color: white;
+                animation: blinkingBackgroundRed 0.5 linear;
             }
             &.green{
-                background-color: rgba(green, 0.75);
-                color: white;
+                animation: blinkingBackgroundGreen 0.5s linear;
             }
         }
     }
+}
+
+@keyframes blinkingBackgroundGreen{
+    100%		{ background-color: #10c018; color: white;}
+}
+
+@keyframes blinkingBackgroundRed{
+    100%		{ background-color: red; color: white;}
 }

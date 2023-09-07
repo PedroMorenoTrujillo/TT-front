@@ -1,6 +1,6 @@
 export interface AccountModel {
   _id: string;
-  ccountName: string;
+  accountName: string;
   category?: string;
   tag?: string;
   balance: number;

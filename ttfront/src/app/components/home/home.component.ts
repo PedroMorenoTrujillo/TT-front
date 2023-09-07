@@ -1,5 +1,5 @@
 import { AccountModel } from './../../models/account.interface';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataTableComponent } from '../data-table/data-table.component';
 import {
@@ -8,13 +8,7 @@ import {
 } from '../data-table/models/table.interface';
 import { AccountService } from 'src/app/services/account.service';
 import { tableColumns } from './models/table-columns';
-import {
-  Observable,
-  Subject,
-  distinctUntilChanged,
-  map,
-  takeUntil,
-} from 'rxjs';
+import { Observable } from 'rxjs';
 import { ExchangeService } from 'src/app/services/exchange.service';
 import { ExchangeModel } from 'src/app/models/exchange.interface';
 
@@ -26,13 +20,12 @@ import { ExchangeModel } from 'src/app/models/exchange.interface';
   styleUrls: ['./home.component.scss'],
   providers: [AccountService],
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit {
   tableColumns: TableColumnsModel[] = [...tableColumns];
   tableData: Observable<TableDataModel<AccountModel>[]> = new Observable<
     TableDataModel<AccountModel>[]
   >();
-  exchangeRate: Observable<ExchangeModel> = new Observable<ExchangeModel>() ;
-  private readonly unsubscribe: Subject<void> = new Subject<void>();
+  exchangeRate: Observable<ExchangeModel> = new Observable<ExchangeModel>();
 
   constructor(
     private accountService: AccountService,
@@ -40,10 +33,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.getAllAccounts()
     this.getTableData();
-    this.exchangeRate = this.exchangeService
-      .getExchangeFromSockets()
-      .pipe(takeUntil(this.unsubscribe), distinctUntilChanged())
+    this.getExchangeRate();
   }
 
   getTableData(): void {
@@ -52,10 +44,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     >;
   }
 
-  ngOnDestroy(): void {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
+  getAllAccounts(): void{
+    this.accountService.emitAccountsFromSockets();
   }
+
+  getExchangeRate(): void {
+    this.exchangeRate = this.exchangeService.getExchangeFromSockets();
+  }
+
 }
 
 // tableData: TableDataModel[] = [

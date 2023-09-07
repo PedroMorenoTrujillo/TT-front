@@ -18,6 +18,7 @@ export class DataTableComponent {
   @Input() tableData!: TableDataModel<any>[];
   @Input() isSortOptionActive: boolean = false;
   @Input() exchangeRate!: ExchangeModel | null;
+  @Input() details: boolean = false;
 
   colorCheckerRow(details: IAccountDetail[]): string {
     if (
@@ -30,7 +31,14 @@ export class DataTableComponent {
       details[details.length - 2].availableBalance
     )
       return 'green';
-      return ''
+    return '';
   }
 
+  exchangeRateApplied(balanceValue: number): number {
+    return this.exchangeRate ? this.exchangeRate.exchange * balanceValue : 0;
+  }
+
+  formatDate(value: Date): string {
+    return new Date(value).toLocaleDateString();
+  }
 }

@@ -12,7 +12,15 @@ export class WebsocketService {
     return this.socket.fromEvent(event)
   }
 
-  emitAccountId(event: string, id: string ) {
+  emitWithIdId(event: string, id: string ) {
     return this.socket.emit(event, id);
+  }
+
+  genericEmit(event: string ) {
+    return this.socket.emit(event);
+  }
+
+  emitExchangeRate(event: string ) {
+    return this.socket.emit(event);
   }
 }

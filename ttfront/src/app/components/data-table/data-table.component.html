@@ -1,42 +1,65 @@
-<p-table
-    *ngIf="tableData"
-    #dtable
-    [value]="tableData"
-    [rows]="10"
-    [showCurrentPageReport]="true"
-    [paginator]="true"
-    [columns]="columns"
-    dataKey="id"
-  >
+<p-table *ngIf="tableData" #dtable [value]="tableData" [rows]="15" [showCurrentPageReport]="true" [paginator]="true"
+  [columns]="columns" dataKey="id">
 
-    <ng-template pTemplate="header" let-columns >
-      <tr>
-        <th [pSortableColumn]="col.field" *ngFor="let col of columns" [ngClass]="{'text-right': col.type === 'balance'}">
-          {{ col.name }}
-          <p-sortIcon [field]="col.field" *ngIf="isSortOptionActive"></p-sortIcon>
-        </th>
-      </tr>
-    </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th [pSortableColumn]="col.field" *ngFor="let col of columns" [ngClass]="{'text-right': col.type === 'balance'}">
+        {{ col.name }}
+        <p-sortIcon [field]="col.field" *ngIf="isSortOptionActive"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
 
-    <ng-template pTemplate="body" let-rowData let-columns="columns">
-      <tr [routerLink]="['details/' + rowData._id]" [ngClass]="{'red': colorCheckerRow(rowData.details) === 'red', 'green': colorCheckerRow(rowData.details) === 'green'  }">
-        <td *ngFor="let col of columns; let i = index">
-          <ng-container [ngSwitch]="col?.type">
-            <div class="d-block text-right" *ngSwitchCase="'balance'">
-              <div><span>{{rowData.details[rowData.details?.length - 1]?.balance }} BTC</span></div>
-              <div><span *ngIf="exchangeRate">{{(rowData.details[rowData.details?.length - 1]?.availableBalance) * exchangeRate.exchange | currency: '$' }}</span></div>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr [routerLink]="['details/' + rowData._id]" *ngIf="!details"
+      [ngClass]="{'red': colorCheckerRow(rowData.details) === 'red', 'green': colorCheckerRow(rowData.details) === 'green'  }">
+      <td *ngFor="let col of columns; let i = index">
+        <ng-container [ngSwitch]="col?.type">
+          <div class="d-block text-right" *ngSwitchCase="'balance'">
+            <div><span>{{rowData.details[rowData.details?.length - 1]?.balance }} BTC</span></div>
+            <div>
+              <span *ngIf="exchangeRate">
+                {{ exchangeRateApplied(rowData.details[rowData.details?.length - 1]?.availableBalance) | currency: '$'
+                }}
+              </span>
             </div>
-            <div *ngSwitchCase="'regular'">
-              {{ rowData[col.field] }}
-            </div>
-          </ng-container>
-        </td>
-      </tr>
-    </ng-template>
+          </div>
+          <div *ngSwitchCase="'regular'">
+            {{ rowData[col.field] }}
+          </div>
+          <div *ngSwitchCase="'date'">
+            {{ formatDate(rowData[col.field]) }}
+          </div>
+        </ng-container>
+      </td>
+    </tr>
 
-    <ng-template pTemplate="emptymessage">
-      <tr>
-        <td colspan="5">{{ 'smartTable.noData' }}</td>
-      </tr>
-    </ng-template>
-  </p-table>
+    <tr *ngIf="details">
+      <td *ngFor="let col of columns; let i = index">
+        <ng-container [ngSwitch]="col?.type">
+          <div class="d-block text-right" *ngSwitchCase="'balance'">
+            <div><span>{{rowData[col.field] ? rowData[col.field] + 'BTC' : null }}</span></div>
+            <div>
+              <span *ngIf="exchangeRate">
+                {{ exchangeRateApplied(rowData[col.field]) | currency: '$'
+                }}
+              </span>
+            </div>
+          </div>
+          <div *ngSwitchCase="'regular'">
+            {{ rowData[col.field] }}
+          </div>
+          <div *ngSwitchCase="'date'">
+            {{ formatDate(rowData[col.field]) }}
+          </div>
+        </ng-container>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="5">No Data</td>
+    </tr>
+  </ng-template>
+</p-table>

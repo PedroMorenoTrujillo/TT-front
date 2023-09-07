@@ -14,4 +14,12 @@ export class ExchangeService {
     return this.websocketService.listen('exchange') as Observable<ExchangeModel>
   }
 
+  emitExchangeFromSockets(): void {
+    this.websocketService.genericEmit('exchange');
+  }
+
+  emitExchangeFromSocketsInit(): void {
+    this.websocketService.genericEmit('exchangeInit');
+  }
+
 }

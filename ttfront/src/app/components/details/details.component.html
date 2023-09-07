@@ -1,2 +1,16 @@
-<p>details works!</p>
-{{account | async | json}}
+<div class="account-container my-5 mx-2 p-2 bg-light border" *ngIf="account | async as accountData">
+    <div>{{accountData.accountName}}</div>
+    <div>{{accountData.category}}</div>
+    <div>
+        <span>{{ accountData.balance }}</span>
+        <span *ngIf="exchangeRate | async as exchangeRate">{{accountData.balance *
+            exchangeRate.exchange | currency: '$' }}</span>
+    </div>
+
+</div>
+
+
+<div class="m-5">
+    <app-data-table [isSortOptionActive]="true" [columns]="tableColumns" [tableData]="(tableData | async) || []"
+        [exchangeRate]="exchangeRate | async" [details]="true"></app-data-table>
+</div>
