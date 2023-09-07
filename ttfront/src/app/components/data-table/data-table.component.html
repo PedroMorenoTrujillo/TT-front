@@ -34,11 +34,11 @@
       </td>
     </tr>
 
-    <tr *ngIf="details">
+    <tr *ngIf="details" [ngClass]="{'red': colorCheckerRow(rowData) === 'red', 'green': colorCheckerRow(rowData) === 'green'  }">
       <td *ngFor="let col of columns; let i = index">
         <ng-container [ngSwitch]="col?.type">
           <div class="d-block text-right" *ngSwitchCase="'balance'">
-            <div><span>{{rowData[col.field] ? rowData[col.field] + 'BTC' : null }}</span></div>
+            <div><span>{{rowData[col.field] ? rowData[col.field] + ' BTC' : null }}</span></div>
             <div>
               <span *ngIf="exchangeRate">
                 {{ exchangeRateApplied(rowData[col.field]) | currency: '$'
