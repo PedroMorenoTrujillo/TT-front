@@ -1,15 +1,17 @@
-<div class="account-container my-5 mx-2 p-2 bg-light border" *ngIf="account | async as accountData">
-    <div>{{accountData.accountName}}</div>
-    <div>{{accountData.category}}</div>
-    <div>
-        <span>{{ accountData.balance }}</span>
-        <span *ngIf="exchangeRate | async as exchangeRate">{{accountData.balance *
-            exchangeRate.exchange | currency: '$' }}</span>
+<div class="my-5 mx-2 p-3 bg-light border" *ngIf="account | async as accountData">
+    <div class="mb-1">Account name: {{accountData.accountName}}</div>
+    <div class="mb-3">Account category: {{accountData.category}}</div>
+    <div class="text-success mb-3">
+        <span class="h4">{{ accountData.balance + 'BTC' }}</span>
+        <span class="h6 ml-3" *ngIf="exchangeRate | async as exchangeRate">({{accountData.balance *
+            exchangeRate.exchange | currency: '$' }})</span>
     </div>
-
+    <div>
+        <span class="h6">Available Balance: {{ accountData.availableBalance + 'BTC' }}</span>
+        <span class="h6 ml-3" *ngIf="exchangeRate | async as exchangeRate">({{accountData.availableBalance *
+            exchangeRate.exchange | currency: '$' }})</span>
+    </div>
 </div>
-
-
 <div class="m-5">
     <app-data-table [isSortOptionActive]="true" [columns]="tableColumns" [tableData]="(tableData | async) || []"
         [exchangeRate]="exchangeRate | async" [details]="true"></app-data-table>

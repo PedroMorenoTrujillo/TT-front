@@ -21,24 +21,25 @@ export class DataTableComponent {
   @Input() details: boolean = false;
 
   colorCheckerRow(details: IAccountDetail[]): string {
-    if (
-      details[details.length - 1].availableBalance <
-      details[details.length - 2].availableBalance
+    if (details.length > 0 && 
+      details[details.length - 1]?.availableBalance <
+      details[details.length - 2]?.availableBalance
     )
       return 'red';
-    if (
-      details[details.length - 1].availableBalance >
-      details[details.length - 2].availableBalance
+    if (details.length > 0 &&
+      details[details.length - 1]?.availableBalance >
+      details[details.length - 2]?.availableBalance
     )
       return 'green';
-    return '';
+      return ''
   }
 
-  exchangeRateApplied(balanceValue: number): number {
+  exchangeRateApplied(balanceValue: number): number{
     return this.exchangeRate ? this.exchangeRate.exchange * balanceValue : 0;
   }
 
-  formatDate(value: Date): string {
+  formatDate(value: Date): string{
     return new Date(value).toLocaleDateString();
   }
+
 }

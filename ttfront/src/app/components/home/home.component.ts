@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getAllAccounts()
+    this.getAllAccounts();
     this.getTableData();
     this.getExchangeRate();
   }
@@ -44,55 +44,12 @@ export class HomeComponent implements OnInit {
     >;
   }
 
-  getAllAccounts(): void{
+  getAllAccounts(): void {
     this.accountService.emitAccountsFromSockets();
   }
 
   getExchangeRate(): void {
     this.exchangeRate = this.exchangeService.getExchangeFromSockets();
+    this.exchangeService.emitExchangeFromSocketsInit();
   }
-
 }
-
-// tableData: TableDataModel[] = [
-//   {
-//     id: '1',
-//     accountName: 'acc 1',
-//     category: 'cat 1',
-//     tag: 'tag 1',
-//     balance: 5,
-//     availableBalance: 5,
-//     orderCode: '22222',
-//     orderId: '33333'
-//   },
-//   {
-//     id: '2',
-//     accountName: 'acc 2',
-//     category: 'cat 2',
-//     // tag: 'tag 2',
-//     balance: 5,
-//     availableBalance: 5,
-//     orderCode: 'jj222',
-//     orderId: '33ggg'
-//   },
-//   {
-//     id: '3',
-//     accountName: 'acc 3',
-//     category: 'cat 3',
-//     tag: 'tag 3',
-//     balance: 5,
-//     availableBalance: 5,
-//     orderCode: '1122',
-//     orderId: '343'
-//   },
-//   {
-//     id: '4',
-//     accountName: 'acc 4',
-//     category: 'cat 4',
-//     tag: 'tag 4',
-//     balance: 5,
-//     availableBalance: 5,
-//     orderCode: '2222222',
-//     orderId: '344433'
-//   },
-// ];

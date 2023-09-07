@@ -42,11 +42,13 @@ export class DetailsComponent implements OnInit {
 
   getAccountDataDetails(): void {
     this.tableData = this.account.pipe(
-      map((account: AccountModel) => account.details)
+      map((account: AccountModel) => account?.details)
     ) as Observable<TableDataModel<IAccountDetail>[]>;
   }
 
   getExchangeRate(): void {
     this.exchangeRate = this.exchangeService.getExchangeFromSockets();
+    this.exchangeService.emitExchangeFromSocketsInit()
+    this.accountService.emitAccountsFromSockets();
   }
 }

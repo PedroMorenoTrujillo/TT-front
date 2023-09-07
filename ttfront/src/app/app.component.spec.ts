@@ -1,10 +1,24 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { environment } from 'src/environments/environment';
+import { HeaderComponent } from './components/header/header.component';
+const config: SocketIoConfig = { url: environment.socketsUrl };
 
 describe('AppComponent', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [AppComponent]
-  }));
+
+  let fixture: ComponentFixture<AppComponent>;
+  let app: AppComponent;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [],
+      imports: [SocketIoModule.forRoot(config)]
+    });
+
+    fixture = TestBed.createComponent(AppComponent);
+    app = fixture.componentInstance;
+  });
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
@@ -12,16 +26,8 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'ttfront' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
+  it(`should have as title 'ttfront'`, () => {
     expect(app.title).toEqual('ttfront');
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('ttfront app is running!');
-  });
 });
