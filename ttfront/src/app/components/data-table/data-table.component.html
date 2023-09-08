@@ -10,13 +10,13 @@
     </tr>
   </ng-template>
 
-  <ng-template pTemplate="body" let-rowData let-columns="columns">
+  <ng-template pTemplate="body" let-rowData let-columns="columns" let-i="rowIndex">
     <tr [routerLink]="['details/' + rowData._id]" *ngIf="!details"
-      [ngClass]="{'red': colorCheckerRow(rowData.details) === 'red', 'green': colorCheckerRow(rowData.details) === 'green'  }">
+      [ngClass]="{'red': colorFlasherRow(rowData.details) === 'red', 'green': colorFlasherRow(rowData.details) === 'green'  }">
       <td *ngFor="let col of columns; let i = index">
         <ng-container [ngSwitch]="col?.type">
           <div class="d-block text-right" *ngSwitchCase="'balance'">
-            <div><span>{{rowData.details[rowData.details?.length - 1]?.balance }} BTC</span></div>
+            <div><span>{{(rowData.details[rowData.details?.length - 1]?.balance | number: '0.0-8' )}} BTC</span></div>
             <div>
               <span *ngIf="exchangeRate">
                 {{ exchangeRateApplied(rowData.details[rowData.details?.length - 1]?.availableBalance) | currency: '$'
@@ -34,11 +34,11 @@
       </td>
     </tr>
 
-    <tr *ngIf="details" [ngClass]="{'red': colorCheckerRow(rowData) === 'red', 'green': colorCheckerRow(rowData) === 'green'  }">
+    <tr *ngIf="details" [ngClass]="{'red': colorFlasherRowDetail(i) === 'red', 'green': colorFlasherRowDetail(i) === 'green'  }">
       <td *ngFor="let col of columns; let i = index">
         <ng-container [ngSwitch]="col?.type">
           <div class="d-block text-right" *ngSwitchCase="'balance'">
-            <div><span>{{rowData[col.field] ? rowData[col.field] + ' BTC' : null }}</span></div>
+            <div><span>{{rowData[col.field] ? (rowData[col.field] | number: '0.0-8') + ' BTC' : null }}</span></div>
             <div>
               <span *ngIf="exchangeRate">
                 {{ exchangeRateApplied(rowData[col.field]) | currency: '$'

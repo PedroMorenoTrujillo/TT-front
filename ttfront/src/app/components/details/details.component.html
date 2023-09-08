@@ -12,7 +12,7 @@
             exchangeRate.exchange | currency: '$' }})</span>
     </div>
 </div>
-<div class="m-5">
+<div class="my-5 p-2">
     <app-data-table [isSortOptionActive]="true" [columns]="tableColumns" [tableData]="(tableData | async) || []"
         [exchangeRate]="exchangeRate | async" [details]="true"></app-data-table>
 </div>

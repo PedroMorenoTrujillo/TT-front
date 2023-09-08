@@ -1,13 +1,22 @@
 :host{
     ::ng-deep{
-        p-table .p-element.p-datatable-tbody tr {
-            &.red{
-                animation: blinkingBackgroundRed 0.5 linear;
+        p-table {
+            .p-datatable{
+                font-size: 0.85rem;
+                .p-element.p-datatable-tbody tr {
+                    &.red{
+                        animation: blinkingBackgroundRed 0.5 linear;
+                    }
+                    &.green{
+                        animation: blinkingBackgroundGreen 0.5s linear;
+                    }
+                    td{
+                        padding: 0.6rem;
+                    }
+                }
             }
-            &.green{
-                animation: blinkingBackgroundGreen 0.5s linear;
-            }
-        }
+            
+        } 
     }
 }
 
