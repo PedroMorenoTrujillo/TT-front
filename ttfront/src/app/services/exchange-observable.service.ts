@@ -11,7 +11,7 @@ export class ExchangeObservableService {
   private exchangeObservableSource: BehaviorSubject<ExchangeModel> =
     new BehaviorSubject<ExchangeModel>({} as ExchangeModel);
 
-  exchangeObservableSource$ = this.exchangeObservableSource.asObservable();
+  exchangeObservableSource$ = this.exchangeObservableSource;
 
   exchangeObservableSourceNext(exchange: ExchangeModel) {
     this.exchangeObservableSource.next(exchange);

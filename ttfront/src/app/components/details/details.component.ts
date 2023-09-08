@@ -48,7 +48,5 @@ export class DetailsComponent implements OnInit {
 
   getExchangeRate(): void {
     this.exchangeRate = this.exchangeService.getExchangeFromSockets();
-    this.exchangeService.emitExchangeFromSocketsInit()
-    this.accountService.emitAccountsFromSockets();
   }
 }

@@ -34,16 +34,6 @@ describe('HeaderComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call getExchangeRate and getExchangeRateValue on ngOnInit', () => {
-    spyOn(component, 'getExchangeRate');
-    spyOn(component, 'getExchangeRateValue');
-
-    component.ngOnInit();
-
-    expect(component.getExchangeRate).toHaveBeenCalled();
-    expect(component.getExchangeRateValue).toHaveBeenCalled();
-  });
-
   it('should set exchangeValue from exchangeService', () => {
     const mockExchange: ExchangeModel = { _id: 'xxxxx',
     exchange: 55, };

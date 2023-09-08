@@ -4,22 +4,20 @@ import { ExchangeModel } from '../models/exchange.interface';
 import { WebsocketService } from './websocket.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ExchangeService {
+  constructor(private websocketService: WebsocketService) {
+    this.emitExchangeFromSockets();
+  }
 
-  constructor(private websocketService: WebsocketService) { }
-
-  getExchangeFromSockets(): Observable<ExchangeModel>{
-    return this.websocketService.listen('exchange') as Observable<ExchangeModel>
+  getExchangeFromSockets(): Observable<ExchangeModel> {
+    return this.websocketService.listen(
+      'exchange'
+    ) as Observable<ExchangeModel>;
   }
 
   emitExchangeFromSockets(): void {
     this.websocketService.genericEmit('exchange');
   }
-
-  emitExchangeFromSocketsInit(): void {
-    this.websocketService.genericEmit('exchangeInit');
-  }
-
 }

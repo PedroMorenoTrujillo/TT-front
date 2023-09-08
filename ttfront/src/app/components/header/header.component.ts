@@ -1,5 +1,5 @@
 import { ExchangeService } from './../../services/exchange.service';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { ExchangeModel } from 'src/app/models/exchange.interface';
@@ -12,22 +12,15 @@ import { ExchangeModel } from 'src/app/models/exchange.interface';
   styleUrls: ['./header.component.scss'],
   providers: [ExchangeService],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   exchangeValue: Observable<ExchangeModel> = new Observable<ExchangeModel>();
 
-  constructor(private readonly exchangeService: ExchangeService) {}
-
-  ngOnInit(): void {
-    this.getExchangeRateValue();
+  constructor(private readonly exchangeService: ExchangeService) {
     this.getExchangeRate();
   }
 
   getExchangeRate(): void {
     this.exchangeValue = this.exchangeService.getExchangeFromSockets();
-  }
-
-  getExchangeRateValue(): void{
-    this.exchangeService.emitExchangeFromSocketsInit();
-    this.exchangeService.emitExchangeFromSockets();
+    
   }
 }

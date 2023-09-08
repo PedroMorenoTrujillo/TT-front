@@ -30,10 +30,11 @@ export class HomeComponent implements OnInit {
   constructor(
     private accountService: AccountService,
     private readonly exchangeService: ExchangeService
-  ) {}
+  ) {
+    this.getAllAccounts();
+  }
 
   ngOnInit(): void {
-    this.getAllAccounts();
     this.getTableData();
     this.getExchangeRate();
   }
@@ -50,6 +51,5 @@ export class HomeComponent implements OnInit {
 
   getExchangeRate(): void {
     this.exchangeRate = this.exchangeService.getExchangeFromSockets();
-    this.exchangeService.emitExchangeFromSocketsInit();
   }
 }

@@ -46,12 +46,10 @@ describe('HomeComponent', () => {
   });
 
   it('should call getAllAccounts and getExchangeRate on ngOnInit', () => {
-    spyOn(component, 'getAllAccounts');
     spyOn(component, 'getExchangeRate');
 
     component.ngOnInit();
 
-    expect(component.getAllAccounts).toHaveBeenCalled();
     expect(component.getExchangeRate).toHaveBeenCalled();
   });
 });

@@ -26,6 +26,6 @@ export class AccountService {
   }
 
   emitAccountsFromSockets(): void {
-    return this.websocketService.genericEmit('account');
+    this.websocketService.genericEmit('account');
   }
 }
